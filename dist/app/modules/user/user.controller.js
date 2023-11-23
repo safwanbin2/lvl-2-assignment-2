@@ -113,9 +113,41 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
+// Deleting user by id
+const deleteSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        // checking if exists
+        const isExist = yield user_service_1.UserService.isUserExistIntoDB(userId);
+        if (!isExist) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found",
+                error: {
+                    code: 404,
+                    description: "User not found!",
+                },
+            });
+        }
+        const result = yield user_service_1.UserService.deleteSingleUserFromDB(userId);
+        res.status(200).send({
+            success: true,
+            message: "User deleted successfully!",
+            data: null,
+        });
+    }
+    catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Could not delete User",
+            error: error,
+        });
+    }
+});
 exports.UserController = {
     createUser,
     getAllUsers,
     getSingleUser,
     updateUser,
+    deleteSingleUser,
 };

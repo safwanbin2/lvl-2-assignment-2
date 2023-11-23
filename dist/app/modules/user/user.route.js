@@ -11,5 +11,5 @@ router.post("/", user_controller_1.UserController.createUser);
 router.get("/", user_controller_1.UserController.getAllUsers);
 router.get("/:userId", user_controller_1.UserController.getSingleUser);
 router.put("/:userId", user_controller_1.UserController.updateUser);
-router.delete("/:userId");
+router.delete("/:userId", user_controller_1.UserController.deleteSingleUser);
 exports.UserRouter = router;

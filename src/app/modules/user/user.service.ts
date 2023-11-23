@@ -44,10 +44,17 @@ const updateUserIntoDB = async (userId: string, updatedBody: any) => {
   return result;
 };
 
+// Deleting an user with the id
+const deleteSingleUserFromDB = async (userId: string) => {
+  const result = await UserModel.deleteOne({ userId });
+  return result;
+};
+
 export const UserService = {
   createUserIntoDB,
   isUserExistIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
   updateUserIntoDB,
+  deleteSingleUserFromDB,
 };
