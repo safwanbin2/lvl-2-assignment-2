@@ -1,4 +1,4 @@
-import { TUser } from "./user.interface";
+import { TOrder, TUser } from "./user.interface";
 import { UserModel } from "./user.model";
 
 // Creating Single user into the db
@@ -50,6 +50,15 @@ const deleteSingleUserFromDB = async (userId: string) => {
   return result;
 };
 
+// update by adding ordes to user
+const addOrderToUserIntoDB = async (userId: string, order: TOrder) => {
+  const result = await UserModel.updateOne(
+    { userId },
+    { $addToSet: { orders: order } }
+  );
+  return result;
+};
+
 export const UserService = {
   createUserIntoDB,
   isUserExistIntoDB,
@@ -57,4 +66,5 @@ export const UserService = {
   getSingleUserFromDB,
   updateUserIntoDB,
   deleteSingleUserFromDB,
+  addOrderToUserIntoDB,
 };

@@ -144,10 +144,43 @@ const deleteSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, functio
         });
     }
 });
+// adding order to user
+const addOrderToUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const order = req.body;
+        const isExist = yield user_service_1.UserService.isUserExistIntoDB(userId);
+        if (!isExist) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found",
+                error: {
+                    code: 404,
+                    description: "User not found!",
+                },
+            });
+        }
+        // const validatedOrder = orderValidationSchema.parse(order);
+        const result = yield user_service_1.UserService.addOrderToUserIntoDB(userId, order);
+        res.status(200).send({
+            success: true,
+            message: "Order created successfully!",
+            data: result,
+        });
+    }
+    catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Could not add order",
+            error: error,
+        });
+    }
+});
 exports.UserController = {
     createUser,
     getAllUsers,
     getSingleUser,
     updateUser,
     deleteSingleUser,
+    addOrderToUser,
 };

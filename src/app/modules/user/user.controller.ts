@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { userValidationSchema } from "./user.validation";
+import { orderValidationSchema, userValidationSchema } from "./user.validation";
 import { UserService } from "./user.service";
 
 const createUser = async (req: Request, res: Response) => {
@@ -143,10 +143,46 @@ const deleteSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// adding order to user
+const addOrderToUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const order = req.body;
+
+    const isExist = await UserService.isUserExistIntoDB(userId);
+    if (!isExist) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    // const validatedOrder = orderValidationSchema.parse(order);
+
+    const result = await UserService.addOrderToUserIntoDB(userId, order);
+    res.status(200).send({
+      success: true,
+      message: "Order created successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Could not add order",
+      error: error,
+    });
+  }
+};
+
 export const UserController = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUser,
   deleteSingleUser,
+  addOrderToUser,
 };

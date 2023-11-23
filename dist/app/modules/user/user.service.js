@@ -54,6 +54,11 @@ const deleteSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, fun
     const result = yield user_model_1.UserModel.deleteOne({ userId });
     return result;
 });
+// update by adding ordes to user
+const addOrderToUserIntoDB = (userId, order) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.updateOne({ userId }, { $addToSet: { orders: order } });
+    return result;
+});
 exports.UserService = {
     createUserIntoDB,
     isUserExistIntoDB,
@@ -61,4 +66,5 @@ exports.UserService = {
     getSingleUserFromDB,
     updateUserIntoDB,
     deleteSingleUserFromDB,
+    addOrderToUserIntoDB,
 };
