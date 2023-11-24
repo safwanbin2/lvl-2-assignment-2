@@ -113,8 +113,23 @@ userSchema.pre("save", async function (next) {
 // removing password field while sending it back to response
 userSchema.post("save", async function (user) {
   user.toJSON = function () {
-    const userObject: { password?: string } = this.toObject();
+    const userObject: { password?: string; _id?: string; __v?: number } =
+      this.toObject();
     delete userObject?.password;
+    delete userObject?._id;
+    delete userObject?.__v;
+    return userObject;
+  };
+});
+
+// removing password after find and update
+userSchema.post("findOneAndUpdate", async function (user) {
+  user.toJSON = function () {
+    const userObject: { password?: string; _id?: string; __v?: number } =
+      this.toObject();
+    delete userObject?.password;
+    delete userObject?._id;
+    delete userObject?.__v;
     return userObject;
   };
 });

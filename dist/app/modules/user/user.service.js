@@ -26,7 +26,7 @@ const isUserExistIntoDB = (userId) => __awaiter(void 0, void 0, void 0, function
 });
 // Getting a single user by id by the user ID
 const getSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_model_1.UserModel.findOne({ userId: userId }, { password: 0 });
+    const result = yield user_model_1.UserModel.findOne({ userId: userId }, { password: 0, _id: 0, __v: 0 });
     return result;
 });
 // Getting all the users from db
@@ -34,7 +34,8 @@ const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.UserModel.aggregate([
         {
             $project: {
-                userName: 1,
+                _id: 0,
+                username: 1,
                 fullName: 1,
                 age: 1,
                 email: 1,
@@ -46,7 +47,9 @@ const getAllUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 // Updating user information by following model
 const updateUserIntoDB = (userId, updatedBody) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_model_1.UserModel.updateOne({ userId }, updatedBody);
+    const result = yield user_model_1.UserModel.findOneAndUpdate({ userId }, updatedBody, {
+        new: true,
+    });
     return result;
 });
 // Deleting an user with the id
@@ -64,7 +67,7 @@ const addOrderToUserIntoDB = (userId, order) => __awaiter(void 0, void 0, void 0
 });
 // getting all the orders for a spcific user
 const getAllOrdersForSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_model_1.UserModel.findOne({ userId: userId }, { orders: 1 });
+    const result = yield user_model_1.UserModel.findOne({ userId: userId }, { orders: 1, _id: 0 });
     return result;
 });
 // calculatng total price for specific user orders
@@ -84,6 +87,7 @@ const totalPriceForSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void
                         },
                     },
                 },
+                _id: 0,
             },
         },
     ]);

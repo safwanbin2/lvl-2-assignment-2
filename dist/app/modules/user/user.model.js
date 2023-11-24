@@ -113,6 +113,20 @@ userSchema.post("save", function (user) {
         user.toJSON = function () {
             const userObject = this.toObject();
             userObject === null || userObject === void 0 ? true : delete userObject.password;
+            userObject === null || userObject === void 0 ? true : delete userObject._id;
+            userObject === null || userObject === void 0 ? true : delete userObject.__v;
+            return userObject;
+        };
+    });
+});
+// removing password after find and update
+userSchema.post("findOneAndUpdate", function (user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        user.toJSON = function () {
+            const userObject = this.toObject();
+            userObject === null || userObject === void 0 ? true : delete userObject.password;
+            userObject === null || userObject === void 0 ? true : delete userObject._id;
+            userObject === null || userObject === void 0 ? true : delete userObject.__v;
             return userObject;
         };
     });

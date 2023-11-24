@@ -225,7 +225,7 @@ const totalPriceForSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(200).send({
             success: true,
             message: "Total price calculated successfully!",
-            data: result,
+            data: result[0],
         });
     }
     catch (error) {

@@ -18,7 +18,10 @@ const isUserExistIntoDB = async (userId: string) => {
 
 // Getting a single user by id by the user ID
 const getSingleUserFromDB = async (userId: string) => {
-  const result = await UserModel.findOne({ userId: userId }, { password: 0 });
+  const result = await UserModel.findOne(
+    { userId: userId },
+    { password: 0, _id: 0, __v: 0 }
+  );
   return result;
 };
 
@@ -27,7 +30,8 @@ const getAllUsersFromDB = async () => {
   const result = await UserModel.aggregate([
     {
       $project: {
-        userName: 1,
+        _id: 0,
+        username: 1,
         fullName: 1,
         age: 1,
         email: 1,
@@ -40,7 +44,9 @@ const getAllUsersFromDB = async () => {
 
 // Updating user information by following model
 const updateUserIntoDB = async (userId: string, updatedBody: any) => {
-  const result = await UserModel.updateOne({ userId }, updatedBody);
+  const result = await UserModel.findOneAndUpdate({ userId }, updatedBody, {
+    new: true,
+  });
   return result;
 };
 
@@ -64,7 +70,10 @@ const addOrderToUserIntoDB = async (userId: string, order: TOrder) => {
 
 // getting all the orders for a spcific user
 const getAllOrdersForSingleUserFromDB = async (userId: string) => {
-  const result = await UserModel.findOne({ userId: userId }, { orders: 1 });
+  const result = await UserModel.findOne(
+    { userId: userId },
+    { orders: 1, _id: 0 }
+  );
   return result;
 };
 
@@ -85,6 +94,7 @@ const totalPriceForSingleUserFromDB = async (userId: string) => {
             },
           },
         },
+        _id: 0,
       },
     },
   ]);

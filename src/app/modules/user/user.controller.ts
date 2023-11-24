@@ -242,7 +242,7 @@ const totalPriceForSingleUser = async (req: Request, res: Response) => {
     res.status(200).send({
       success: true,
       message: "Total price calculated successfully!",
-      data: result,
+      data: result[0],
     });
   } catch (error) {
     res.status(500).send({

@@ -9,10 +9,19 @@ const fullNameValidationSchema = zod_1.default.object({
     firstName: zod_1.default.string().max(15),
     lastName: zod_1.default.string().max(15),
 });
+const fullNameValidationUpdateSchema = zod_1.default.object({
+    firstName: zod_1.default.string().max(15).optional(),
+    lastName: zod_1.default.string().max(15).optional(),
+});
 const addressValidationSchema = zod_1.default.object({
     street: zod_1.default.string(),
     city: zod_1.default.string(),
     country: zod_1.default.string().min(3).max(30),
+});
+const addressValidationUpdateSchema = zod_1.default.object({
+    street: zod_1.default.string().optional(),
+    city: zod_1.default.string().optional(),
+    country: zod_1.default.string().min(3).max(30).optional(),
 });
 exports.orderValidationSchema = zod_1.default.object({
     productName: zod_1.default.string(),
@@ -34,10 +43,10 @@ exports.userValidationUpdateSchema = zod_1.default.object({
     userId: zod_1.default.number().optional(),
     username: zod_1.default.string().optional(),
     password: zod_1.default.string().min(2).max(20).optional(),
-    fullName: fullNameValidationSchema.optional(),
+    fullName: fullNameValidationUpdateSchema.optional(),
     age: zod_1.default.number().min(10).max(100).optional(),
     email: zod_1.default.string().email().optional(),
     isActive: zod_1.default.boolean().optional(),
     hobbies: zod_1.default.array(zod_1.default.string()).optional(),
-    address: addressValidationSchema.optional(),
+    address: addressValidationUpdateSchema.optional(),
 });
