@@ -74,7 +74,7 @@ const getSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (error) {
         res.status(404).send({
             success: false,
-            message: error.message || "User not found",
+            message: "User not found",
             error: error,
         });
     }

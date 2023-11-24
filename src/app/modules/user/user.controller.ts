@@ -69,10 +69,10 @@ const getSingleUser = async (req: Request, res: Response) => {
       message: "User fetched successfully!",
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(404).send({
       success: false,
-      message: error.message || "User not found",
+      message: "User not found",
       error: error,
     });
   }

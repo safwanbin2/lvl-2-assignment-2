@@ -27,3 +27,15 @@ export interface TUser {
   address: TAddress;
   orders?: TOrder[];
 }
+export interface TUser {
+  userId: number;
+  username: string;
+  password: string;
+  fullName: TFullName;
+  age: number;
+  email: string;
+  isActive: boolean;
+  hobbies: string[];
+  address: TAddress;
+  orders?: TOrder[];
+}
