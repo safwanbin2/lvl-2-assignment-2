@@ -32,13 +32,13 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_service_1.UserService.getAllUsersFromDB();
-    res.status(200).send({
-        success: true,
-        message: "Users fetched successfully!",
-        data: result,
-    });
     try {
+        const result = yield user_service_1.UserService.getAllUsersFromDB();
+        res.status(200).send({
+            success: true,
+            message: "Users fetched successfully!",
+            data: result,
+        });
     }
     catch (error) {
         res.status(500).send({

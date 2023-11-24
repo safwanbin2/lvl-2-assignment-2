@@ -28,14 +28,14 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (req: Request, res: Response) => {
-  const result = await UserService.getAllUsersFromDB();
-
-  res.status(200).send({
-    success: true,
-    message: "Users fetched successfully!",
-    data: result,
-  });
   try {
+    const result = await UserService.getAllUsersFromDB();
+
+    res.status(200).send({
+      success: true,
+      message: "Users fetched successfully!",
+      data: result,
+    });
   } catch (error) {
     res.status(500).send({
       success: false,
