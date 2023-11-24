@@ -161,13 +161,16 @@ const addOrderToUser = async (req: Request, res: Response) => {
       });
     }
 
-    // const validatedOrder = orderValidationSchema.parse(order);
+    const validatedOrder = orderValidationSchema.parse(order);
 
-    const result = await UserService.addOrderToUserIntoDB(userId, order);
+    const result = await UserService.addOrderToUserIntoDB(
+      userId,
+      validatedOrder
+    );
     res.status(200).send({
       success: true,
       message: "Order created successfully!",
-      data: result,
+      data: null,
     });
   } catch (error) {
     res.status(500).send({

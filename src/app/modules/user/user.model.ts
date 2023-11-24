@@ -82,10 +82,11 @@ const userSchema = new Schema<TUser>({
     type: addressSchema,
     required: true,
   },
-  // orders: {
-  //   type: [orderSchema],
-  //   required: false,
-  // },
+  orders: {
+    type: [orderSchema],
+    required: false,
+    default: undefined,
+  },
 });
 
 // Middleware
@@ -103,8 +104,8 @@ userSchema.pre("save", async function (next) {
 // removing password field while sending it back to response
 userSchema.post("save", async function (user) {
   user.toJSON = function () {
-    const userObject = this.toObject();
-    delete userObject.password;
+    const userObject: { password?: string } = this.toObject();
+    delete userObject?.password;
     return userObject;
   };
 });

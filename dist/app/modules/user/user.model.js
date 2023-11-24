@@ -92,10 +92,11 @@ const userSchema = new mongoose_1.Schema({
         type: addressSchema,
         required: true,
     },
-    // orders: {
-    //   type: [orderSchema],
-    //   required: false,
-    // },
+    orders: {
+        type: [orderSchema],
+        required: false,
+        default: undefined,
+    },
 });
 // Middleware
 // Bcrypting password before storing it into db
@@ -111,7 +112,7 @@ userSchema.post("save", function (user) {
     return __awaiter(this, void 0, void 0, function* () {
         user.toJSON = function () {
             const userObject = this.toObject();
-            delete userObject.password;
+            userObject === null || userObject === void 0 ? true : delete userObject.password;
             return userObject;
         };
     });

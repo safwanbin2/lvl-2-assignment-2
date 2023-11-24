@@ -52,9 +52,12 @@ const deleteSingleUserFromDB = async (userId: string) => {
 
 // update by adding ordes to user
 const addOrderToUserIntoDB = async (userId: string, order: TOrder) => {
-  const result = await UserModel.updateOne(
-    { userId },
-    { $addToSet: { orders: order } }
+  console.log(order);
+  const result = await UserModel.findOneAndUpdate(
+    { userId: userId },
+    {
+      $addToSet: { orders: order },
+    }
   );
   return result;
 };

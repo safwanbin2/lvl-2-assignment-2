@@ -160,12 +160,12 @@ const addOrderToUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 },
             });
         }
-        // const validatedOrder = orderValidationSchema.parse(order);
-        const result = yield user_service_1.UserService.addOrderToUserIntoDB(userId, order);
+        const validatedOrder = user_validation_1.orderValidationSchema.parse(order);
+        const result = yield user_service_1.UserService.addOrderToUserIntoDB(userId, validatedOrder);
         res.status(200).send({
             success: true,
             message: "Order created successfully!",
-            data: result,
+            data: null,
         });
     }
     catch (error) {
