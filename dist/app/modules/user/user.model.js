@@ -25,7 +25,7 @@ const fullNameSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-});
+}, { _id: false });
 const addressSchema = new mongoose_1.Schema({
     street: {
         type: String,
@@ -39,7 +39,7 @@ const addressSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-});
+}, { _id: false });
 const orderSchema = new mongoose_1.Schema({
     productName: {
         type: String,
@@ -53,7 +53,7 @@ const orderSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
-});
+}, { _id: false });
 const userSchema = new mongoose_1.Schema({
     userId: {
         type: Number,

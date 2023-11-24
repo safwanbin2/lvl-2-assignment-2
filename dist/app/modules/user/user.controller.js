@@ -97,8 +97,8 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             });
         }
         // updating by validating the updated body;
-        // const validatedUpdatedBody = userValidationSchema.parse(udpatedBody);
-        const result = yield user_service_1.UserService.updateUserIntoDB(userId, updatedBody);
+        const validatedUpdatedBody = user_validation_1.userValidationUpdateSchema.parse(updatedBody);
+        const result = yield user_service_1.UserService.updateUserIntoDB(userId, validatedUpdatedBody);
         res.status(200).send({
             success: true,
             message: "User updated successfully!",
@@ -206,6 +206,36 @@ const getAllOrdersForSingleUser = (req, res) => __awaiter(void 0, void 0, void 0
         });
     }
 });
+// calculating total price for a spcific user
+const totalPriceForSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const isExist = yield user_service_1.UserService.isUserExistIntoDB(userId);
+        if (!isExist) {
+            return res.status(200).send({
+                success: false,
+                message: "User not found",
+                error: {
+                    code: 404,
+                    description: "User not found!",
+                },
+            });
+        }
+        const result = yield user_service_1.UserService.totalPriceForSingleUserFromDB(userId);
+        res.status(200).send({
+            success: true,
+            message: "Total price calculated successfully!",
+            data: result,
+        });
+    }
+    catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Could not find total price",
+            error: error,
+        });
+    }
+});
 exports.UserController = {
     createUser,
     getAllUsers,
@@ -214,4 +244,5 @@ exports.UserController = {
     deleteSingleUser,
     addOrderToUser,
     getAllOrdersForSingleUser,
+    totalPriceForSingleUser,
 };

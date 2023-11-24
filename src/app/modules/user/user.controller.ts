@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { orderValidationSchema, userValidationSchema } from "./user.validation";
+import {
+  orderValidationSchema,
+  userValidationSchema,
+  userValidationUpdateSchema,
+} from "./user.validation";
 import { UserService } from "./user.service";
 
 const createUser = async (req: Request, res: Response) => {
@@ -94,8 +98,11 @@ const updateUser = async (req: Request, res: Response) => {
     }
 
     // updating by validating the updated body;
-    // const validatedUpdatedBody = userValidationSchema.parse(udpatedBody);
-    const result = await UserService.updateUserIntoDB(userId, updatedBody);
+    const validatedUpdatedBody = userValidationUpdateSchema.parse(updatedBody);
+    const result = await UserService.updateUserIntoDB(
+      userId,
+      validatedUpdatedBody
+    );
 
     res.status(200).send({
       success: true,
@@ -214,6 +221,38 @@ const getAllOrdersForSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// calculating total price for a spcific user
+const totalPriceForSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    const isExist = await UserService.isUserExistIntoDB(userId);
+    if (!isExist) {
+      return res.status(200).send({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    const result = await UserService.totalPriceForSingleUserFromDB(userId);
+    res.status(200).send({
+      success: true,
+      message: "Total price calculated successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Could not find total price",
+      error: error,
+    });
+  }
+};
+
 export const UserController = {
   createUser,
   getAllUsers,
@@ -222,4 +261,5 @@ export const UserController = {
   deleteSingleUser,
   addOrderToUser,
   getAllOrdersForSingleUser,
+  totalPriceForSingleUser,
 };

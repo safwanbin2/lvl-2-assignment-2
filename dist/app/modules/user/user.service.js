@@ -67,6 +67,28 @@ const getAllOrdersForSingleUserFromDB = (userId) => __awaiter(void 0, void 0, vo
     const result = yield user_model_1.UserModel.findOne({ userId: userId }, { orders: 1 });
     return result;
 });
+// calculatng total price for specific user orders
+const totalPriceForSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.aggregate([
+        { $match: { userId: Number(userId) } },
+        {
+            $project: {
+                totalPrice: {
+                    $sum: {
+                        $map: {
+                            input: "$orders",
+                            as: "order",
+                            in: {
+                                $multiply: ["$$order.price", "$$order.quantity"],
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    ]);
+    return result;
+});
 exports.UserService = {
     createUserIntoDB,
     isUserExistIntoDB,
@@ -76,4 +98,5 @@ exports.UserService = {
     deleteSingleUserFromDB,
     addOrderToUserIntoDB,
     getAllOrdersForSingleUserFromDB,
+    totalPriceForSingleUserFromDB,
 };

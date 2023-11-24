@@ -3,46 +3,55 @@ import { TAddress, TFullName, TOrder, TUser } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
 
-const fullNameSchema = new Schema<TFullName>({
-  firstName: {
-    type: String,
-    required: true,
+const fullNameSchema = new Schema<TFullName>(
+  {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
   },
-  lastName: {
-    type: String,
-    required: true,
-  },
-});
+  { _id: false }
+);
 
-const addressSchema = new Schema<TAddress>({
-  street: {
-    type: String,
-    required: true,
+const addressSchema = new Schema<TAddress>(
+  {
+    street: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
   },
-  city: {
-    type: String,
-    required: true,
-  },
-  country: {
-    type: String,
-    required: true,
-  },
-});
+  { _id: false }
+);
 
-const orderSchema = new Schema<TOrder>({
-  productName: {
-    type: String,
-    required: true,
+const orderSchema = new Schema<TOrder>(
+  {
+    productName: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
   },
-  price: {
-    type: Number,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
+  { _id: false }
+);
 
 const userSchema = new Schema<TUser>({
   userId: {

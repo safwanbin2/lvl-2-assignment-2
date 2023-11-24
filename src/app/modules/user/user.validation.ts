@@ -28,3 +28,15 @@ export const userValidationSchema = z.object({
   hobbies: z.array(z.string()),
   address: addressValidationSchema,
 });
+
+export const userValidationUpdateSchema = z.object({
+  userId: z.number().optional(),
+  username: z.string().optional(),
+  password: z.string().min(2).max(20).optional(),
+  fullName: fullNameValidationSchema.optional(),
+  age: z.number().min(10).max(100).optional(),
+  email: z.string().email().optional(),
+  isActive: z.boolean().optional(),
+  hobbies: z.array(z.string()).optional(),
+  address: addressValidationSchema.optional(),
+});
