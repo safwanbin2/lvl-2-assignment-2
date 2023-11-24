@@ -176,6 +176,36 @@ const addOrderToUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
     }
 });
+// get all orders for single user
+const getAllOrdersForSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const isExist = yield user_service_1.UserService.isUserExistIntoDB(userId);
+        if (!isExist) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found",
+                error: {
+                    code: 404,
+                    description: "User not found!",
+                },
+            });
+        }
+        const result = yield user_service_1.UserService.getAllOrdersForSingleUserFromDB(userId);
+        res.status(200).send({
+            success: true,
+            message: "Order fetched successfully!",
+            data: result,
+        });
+    }
+    catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Could not fetch order",
+            error: error,
+        });
+    }
+});
 exports.UserController = {
     createUser,
     getAllUsers,
@@ -183,4 +213,5 @@ exports.UserController = {
     updateUser,
     deleteSingleUser,
     addOrderToUser,
+    getAllOrdersForSingleUser,
 };

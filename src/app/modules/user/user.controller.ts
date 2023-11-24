@@ -181,6 +181,39 @@ const addOrderToUser = async (req: Request, res: Response) => {
   }
 };
 
+// get all orders for single user
+const getAllOrdersForSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    const isExist = await UserService.isUserExistIntoDB(userId);
+    if (!isExist) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+        error: {
+          code: 404,
+          description: "User not found!",
+        },
+      });
+    }
+
+    const result = await UserService.getAllOrdersForSingleUserFromDB(userId);
+
+    res.status(200).send({
+      success: true,
+      message: "Order fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Could not fetch order",
+      error: error,
+    });
+  }
+};
+
 export const UserController = {
   createUser,
   getAllUsers,
@@ -188,4 +221,5 @@ export const UserController = {
   updateUser,
   deleteSingleUser,
   addOrderToUser,
+  getAllOrdersForSingleUser,
 };

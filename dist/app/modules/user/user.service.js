@@ -62,6 +62,11 @@ const addOrderToUserIntoDB = (userId, order) => __awaiter(void 0, void 0, void 0
     });
     return result;
 });
+// getting all the orders for a spcific user
+const getAllOrdersForSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.findOne({ userId: userId }, { orders: 1 });
+    return result;
+});
 exports.UserService = {
     createUserIntoDB,
     isUserExistIntoDB,
@@ -70,4 +75,5 @@ exports.UserService = {
     updateUserIntoDB,
     deleteSingleUserFromDB,
     addOrderToUserIntoDB,
+    getAllOrdersForSingleUserFromDB,
 };

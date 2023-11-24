@@ -62,6 +62,12 @@ const addOrderToUserIntoDB = async (userId: string, order: TOrder) => {
   return result;
 };
 
+// getting all the orders for a spcific user
+const getAllOrdersForSingleUserFromDB = async (userId: string) => {
+  const result = await UserModel.findOne({ userId: userId }, { orders: 1 });
+  return result;
+};
+
 export const UserService = {
   createUserIntoDB,
   isUserExistIntoDB,
@@ -70,4 +76,5 @@ export const UserService = {
   updateUserIntoDB,
   deleteSingleUserFromDB,
   addOrderToUserIntoDB,
+  getAllOrdersForSingleUserFromDB,
 };
