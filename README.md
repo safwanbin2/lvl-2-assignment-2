@@ -11,3 +11,5 @@ An express application that manages users and orders.
 5. Create a .env file, a mongodb database and a new user in the database.
 6. Paste the Database url into the .env file with the name of DB_URL. also include a port number in the name of PORT & again a salt round number in the name of BCRYPT_SALT_ROUNDS.
 7. Now run **npm start** or **npm ./dist/server.js**
+
+## Server (https://user-manager-gilt.vercel.app/api/users)

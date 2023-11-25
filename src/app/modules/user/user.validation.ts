@@ -6,8 +6,8 @@ const fullNameValidationSchema = z.object({
 });
 
 const fullNameValidationUpdateSchema = z.object({
-  firstName: z.string().max(15).optional(),
-  lastName: z.string().max(15).optional(),
+  firstName: z.string().max(15),
+  lastName: z.string().max(15),
 });
 
 const addressValidationSchema = z.object({
@@ -17,9 +17,9 @@ const addressValidationSchema = z.object({
 });
 
 const addressValidationUpdateSchema = z.object({
-  street: z.string().optional(),
-  city: z.string().optional(),
-  country: z.string().min(3).max(30).optional(),
+  street: z.string(),
+  city: z.string(),
+  country: z.string().min(3).max(30),
 });
 
 export const orderValidationSchema = z.object({
