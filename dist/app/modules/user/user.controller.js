@@ -14,7 +14,7 @@ const user_validation_1 = require("./user.validation");
 const user_service_1 = require("./user.service");
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { user } = req.body;
+        const user = req.body;
         const validatedUser = user_validation_1.userValidationSchema.parse(user);
         const result = yield user_service_1.UserService.createUserIntoDB(validatedUser);
         res.status(500).send({
@@ -83,7 +83,7 @@ const getSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId } = req.params;
-        const { updatedBody } = req.body;
+        const updatedBody = req.body;
         //Checking user existence
         const isExist = yield user_service_1.UserService.isUserExistIntoDB(userId);
         if (!isExist) {

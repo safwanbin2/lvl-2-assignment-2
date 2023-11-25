@@ -8,7 +8,7 @@ import { UserService } from "./user.service";
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { user } = req.body;
+    const user = req.body;
     const validatedUser = userValidationSchema.parse(user);
 
     const result = await UserService.createUserIntoDB(validatedUser);
@@ -82,7 +82,7 @@ const getSingleUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
-    const { updatedBody } = req.body;
+    const updatedBody = req.body;
 
     //Checking user existence
     const isExist = await UserService.isUserExistIntoDB(userId);
